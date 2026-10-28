@@ -70,7 +70,7 @@
         <div class="flex items-center gap-3">
           <div class="text-right hidden sm:block">
             <div class="text-xs sm:text-sm text-slate-500">學習進度完成度</div>
-            <div class="text-base font-bold text-blue-600" id="progress-text">0 / 4 練習完成</div>
+            <div class="text-base font-bold text-blue-600" id="progress-text">0 / 5 練習完成</div>
           </div>
           <div class="w-28 bg-slate-200 rounded-full h-3 overflow-hidden">
             <div class="bg-blue-600 h-3 rounded-full transition-all duration-300" id="progress-bar" style="width: 0%"></div>
@@ -94,6 +94,9 @@
         </button>
         <button onclick="switchTab('tab-github')" class="tab-btn px-3.5 sm:px-4 py-2.5 text-sm sm:text-base transition flex items-center gap-2 whitespace-nowrap" data-tab="tab-github">
           <span>☁️ GitHub 備份與部署</span>
+        </button>
+        <button onclick="switchTab('tab-import')" class="tab-btn px-3.5 sm:px-4 py-2.5 text-sm sm:text-base transition flex items-center gap-2 whitespace-nowrap" data-tab="tab-import">
+          <span>🧩 開源借力與技能匯入</span>
         </button>
         <button onclick="switchTab('tab-resources')" class="tab-btn px-3.5 sm:px-4 py-2.5 text-sm sm:text-base transition flex items-center gap-2 whitespace-nowrap" data-tab="tab-resources">
           <span>🎬 推薦影音與資源庫</span>
@@ -162,7 +165,6 @@
         <!-- SVG 流程圖 -->
         <div class="w-full overflow-x-auto py-2">
           <svg class="w-full min-w-[720px] h-68" viewBox="0 0 850 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- 1. 工作目錄 -->
             <rect x="20" y="20" width="170" height="200" rx="14" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="2"/>
             <text x="105" y="55" font-size="16" font-weight="bold" fill="#334155" text-anchor="middle">1. 工作目錄</text>
             <text x="105" y="75" font-size="13" fill="#64748B" text-anchor="middle">Working Directory</text>
@@ -171,12 +173,10 @@
             <text x="105" y="160" font-size="13" fill="#475569" text-anchor="middle">你與 AI 正在寫的檔案</text>
             <text x="105" y="180" font-size="12" fill="#94A3B8" text-anchor="middle">(未存檔/剛修改)</text>
 
-            <!-- 箭頭 1: git add -->
             <path d="M195 120 L235 120" stroke="#3B82F6" stroke-width="3" stroke-linecap="round"/>
             <polygon points="235,115 245,120 235,125" fill="#3B82F6"/>
             <text x="218" y="105" font-size="12" font-weight="bold" fill="#2563EB" text-anchor="middle">git add</text>
 
-            <!-- 2. 暫存區 -->
             <rect x="250" y="20" width="170" height="200" rx="14" fill="#FEF3C7" stroke="#FDE68A" stroke-width="2"/>
             <text x="335" y="55" font-size="16" font-weight="bold" fill="#92400E" text-anchor="middle">2. 暫存區</text>
             <text x="335" y="75" font-size="13" fill="#B45309" text-anchor="middle">Staging Area (Index)</text>
@@ -185,12 +185,10 @@
             <text x="335" y="160" font-size="13" fill="#78350F" text-anchor="middle">確認準備打包的檔案</text>
             <text x="335" y="180" font-size="12" fill="#92400E" text-anchor="middle">(結帳清單)</text>
 
-            <!-- 箭頭 2: git commit -->
             <path d="M425 120 L465 120" stroke="#10B981" stroke-width="3" stroke-linecap="round"/>
             <polygon points="465,115 475,120 465,125" fill="#10B981"/>
             <text x="448" y="105" font-size="12" font-weight="bold" fill="#059669" text-anchor="middle">git commit</text>
 
-            <!-- 3. 本地倉庫 -->
             <rect x="480" y="20" width="170" height="200" rx="14" fill="#DCFCE7" stroke="#BBF7D0" stroke-width="2"/>
             <text x="565" y="55" font-size="16" font-weight="bold" fill="#166534" text-anchor="middle">3. 本地倉庫</text>
             <text x="565" y="75" font-size="13" fill="#15803D" text-anchor="middle">Local Repository (.git)</text>
@@ -199,12 +197,10 @@
             <text x="565" y="160" font-size="13" fill="#14532D" text-anchor="middle">建立正式存檔點快照</text>
             <text x="565" y="180" font-size="12" fill="#15803D" text-anchor="middle">(具備時光機編號)</text>
 
-            <!-- 箭頭 3: git push -->
             <path d="M655 120 L695 120" stroke="#8B5CF6" stroke-width="3" stroke-linecap="round"/>
             <polygon points="695,115 705,120 695,125" fill="#8B5CF6"/>
             <text x="678" y="105" font-size="12" font-weight="bold" fill="#7C3AED" text-anchor="middle">git push</text>
 
-            <!-- 4. GitHub 遠端 -->
             <rect x="710" y="20" width="130" height="200" rx="14" fill="#EDE9FE" stroke="#DDD6FE" stroke-width="2"/>
             <text x="775" y="55" font-size="16" font-weight="bold" fill="#5B21B6" text-anchor="middle">4. GitHub 遠端</text>
             <text x="775" y="75" font-size="13" fill="#6D28D9" text-anchor="middle">Remote Repo</text>
@@ -507,7 +503,7 @@ git stash pop</code></pre>
           <div class="p-4 sm:p-5 bg-slate-50 border border-slate-200 rounded-xl">
             <h4 class="font-bold text-slate-900 text-base sm:text-lg mb-1">情境 4：已經手滑 commit 了，但想反悔存檔？</h4>
             <p class="text-sm text-slate-600 mb-3 leading-relaxed">取消上一次的 commit，但保留你寫好的檔案內容供重新整理：</p>
-            <div class="relative bg-slate-900 text-slate-100 rounded-lg p-3 sm:p-4 code-block text-xs sm:text-sm">
+            <div class="relative bg-slate-900 text-slate-100 rounded-xl p-4 sm:p-5 code-block text-sm sm:text-base">
               <pre><code id="code-rescue-reset"># 拆解上一次的存檔，檔案原封不動留在工作區
 git reset --soft HEAD~1</code></pre>
               <button onclick="copyCode('code-rescue-reset')" class="absolute top-2 right-2 bg-slate-700 text-slate-200 text-xs px-2.5 py-1 rounded">📋 複製</button>
@@ -786,7 +782,312 @@ git pull</code></pre>
     </section>
 
     <!-- ========================================== -->
-    <!-- TAB 6: 推薦影音與資源庫 -->
+    <!-- TAB 6: 開源借力與技能匯入 (NEW TAB!) -->
+    <!-- ========================================== -->
+    <section id="tab-import" class="tab-content hidden space-y-8">
+      
+      <!-- 導讀卡片 -->
+      <div class="bg-gradient-to-r from-teal-50 via-cyan-50 to-blue-50 rounded-2xl p-6 sm:p-8 border border-teal-100 shadow-sm">
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+          <span>🧩 站在全世界巨人的肩膀上：開源代碼引用與 AI 技能匯入</span>
+        </h2>
+        <p class="text-slate-700 leading-relaxed text-base sm:text-lg mb-4">
+          GitHub 擁有全球超過 4 億個公開儲存庫（Repositories）。身為 Vibe Coder，你最大的超能力不是重頭手寫每一個功能，而是<strong>敏捷借力</strong>！
+          你可以把別人的優秀專案下載為起跑模板、Fork 改造成自己專屬的工具，甚至直接把別人的代碼與 SOP 匯入為 AI 的<strong>「專屬 Skill（技能）」</strong>！
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+          <div class="bg-white p-5 rounded-xl border border-slate-200/90 shadow-sm flex items-start gap-3.5">
+            <div class="p-3 bg-cyan-100 text-cyan-700 rounded-lg text-2xl">📥</div>
+            <div>
+              <h3 class="font-bold text-slate-900 text-base sm:text-lg mb-1">Clone 樣板當起點</h3>
+              <p class="text-sm sm:text-base text-slate-600 leading-relaxed">一秒抓下別人已調校好的現代全端框架或小工具，直接換皮客製化。</p>
+            </div>
+          </div>
+          <div class="bg-white p-5 rounded-xl border border-slate-200/90 shadow-sm flex items-start gap-3.5">
+            <div class="p-3 bg-indigo-100 text-indigo-700 rounded-lg text-2xl">🍴</div>
+            <div>
+              <h3 class="font-bold text-slate-900 text-base sm:text-lg mb-1">Fork 自主二開</h3>
+              <p class="text-sm sm:text-base text-slate-600 leading-relaxed">在自己帳號下建立獨立副本，既能自由擴充功能，還能隨時拉取原作者更新。</p>
+            </div>
+          </div>
+          <div class="bg-white p-5 rounded-xl border border-slate-200/90 shadow-sm flex items-start gap-3.5">
+            <div class="p-3 bg-emerald-100 text-emerald-700 rounded-lg text-2xl">⚡</div>
+            <div>
+              <h3 class="font-bold text-slate-900 text-base sm:text-lg mb-1">匯入為 AI Skill</h3>
+              <p class="text-sm sm:text-base text-slate-600 leading-relaxed">把別人的開源工作流打包塞入 <code class="text-xs bg-slate-100 px-1 py-0.5 rounded text-emerald-700">.agents/skills/</code>，AI 瞬間學會新技能！</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 資訊圖表：三種開源借力途徑圖解 -->
+      <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
+            <span>📊 資訊圖解：開源代碼到個人專案的三大路徑</span>
+          </h3>
+          <span class="text-xs sm:text-sm bg-teal-100 text-teal-800 px-3 py-1 rounded font-medium">借力全景圖</span>
+        </div>
+        <p class="text-base sm:text-lg text-slate-600 mb-6 leading-relaxed">
+          看到一個很酷的 GitHub 專案，你該選擇哪種方式？根據你的需求靈活選擇：
+        </p>
+
+        <div class="w-full overflow-x-auto py-2">
+          <svg class="w-full min-w-[720px] h-68" viewBox="0 0 850 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- 來源：GitHub 公開倉庫 -->
+            <rect x="20" y="30" width="180" height="190" rx="14" fill="#F0FDFA" stroke="#5EEAD4" stroke-width="2"/>
+            <text x="110" y="65" font-size="16" font-weight="bold" fill="#0F766E" text-anchor="middle">GitHub 開源寶庫</text>
+            <text x="110" y="85" font-size="12" fill="#14B8A6" text-anchor="middle">Public Repository</text>
+            <circle cx="110" cy="125" r="24" fill="#CCFBF1"/>
+            <text x="110" y="133" font-size="22" text-anchor="middle">🌐</text>
+            <text x="110" y="170" font-size="13" fill="#115E59" text-anchor="middle">優秀套件 / 樣板 / 工具</text>
+            <text x="110" y="190" font-size="11" fill="#0D9488" text-anchor="middle">(MIT / Apache 授權)</text>
+
+            <!-- 途徑 1 箭頭 -->
+            <path d="M205 75 L360 55" stroke="#0284C7" stroke-width="2.5" stroke-dasharray="3 3"/>
+            <polygon points="360,50 370,55 360,60" fill="#0284C7"/>
+            <text x="280" y="55" font-size="12" font-weight="bold" fill="#0369A1" text-anchor="middle">git clone</text>
+
+            <!-- 途徑 2 箭頭 -->
+            <path d="M205 125 L360 125" stroke="#6366F1" stroke-width="2.5"/>
+            <polygon points="360,120 370,125 360,130" fill="#6366F1"/>
+            <text x="280" y="115" font-size="12" font-weight="bold" fill="#4338CA" text-anchor="middle">GitHub Fork</text>
+
+            <!-- 途徑 3 箭頭 -->
+            <path d="M205 175 L360 195" stroke="#10B981" stroke-width="2.5" stroke-dasharray="3 3"/>
+            <polygon points="360,190 370,195 360,200" fill="#10B981"/>
+            <text x="280" y="205" font-size="12" font-weight="bold" fill="#047857" text-anchor="middle">轉化為 Skill</text>
+
+            <!-- 目標 1: Clone 專案起手 -->
+            <rect x="380" y="20" width="440" height="60" rx="10" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="2"/>
+            <text x="400" y="45" font-size="15" font-weight="bold" fill="#0369A1">途徑 1：Clone 下來當個人專案模板</text>
+            <text x="400" y="65" font-size="12" fill="#0284C7">脫離原倉庫歷史 (rm -rf .git) ➔ 打造自己的嶄新應用</text>
+
+            <!-- 目標 2: Fork 專案二開 -->
+            <rect x="380" y="95" width="440" height="60" rx="10" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="2"/>
+            <text x="400" y="120" font-size="15" font-weight="bold" fill="#3730A3">途徑 2：Fork 到自己帳號自主二開</text>
+            <text x="400" y="140" font-size="12" fill="#4338CA">保留完整開源血統 ➔ 隨時 pull upstream 同步原作者最新修正</text>
+
+            <!-- 目標 3: 匯入為 AI Skill -->
+            <rect x="380" y="170" width="440" height="60" rx="10" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="2"/>
+            <text x="400" y="195" font-size="15" font-weight="bold" fill="#065F46">途徑 3：匯入為 AI 協作技能 (Agent Skill)</text>
+            <text x="400" y="215" font-size="12" fill="#047857">將其 SOP 或腳本存入 .agents/skills/ ➔ AI 直接執行複雜任務！</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 詳細情境 1 & 2 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- 情境 1: Clone 轉為自己專案 -->
+        <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-2xl">📥</span>
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900">情境 1：Clone 別人專案當作新起點</h3>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            找到很棒的開源前端模板或 Python 專案時，如何把它變成「屬於你自己的全新專案」？
+          </p>
+          <div class="relative bg-slate-900 text-slate-100 rounded-xl p-4 code-block text-xs sm:text-sm">
+            <pre><code id="code-clone-fresh"># 1. 將開源專案 Clone 到本機
+git clone https://github.com/某作者/開源專案.git my-app
+cd my-app
+
+# 2. 核心大絕：刪除原作者的 Git 歷史記錄
+rm -rf .git
+
+# 3. 重新初始化為自己的全新專案！
+git init
+git add .
+git commit -m "feat: 以開源模板為基礎建立新專案"</code></pre>
+            <button onclick="copyCode('code-clone-fresh')" class="absolute top-3 right-3 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1.5">
+              <span>📋 複製內容</span>
+            </button>
+          </div>
+          <p class="text-xs text-slate-500">
+            💡 <strong>AI 協作技巧</strong>：Clone 完成後，在 Cursor 或 Antigravity 裡對 AI 說：<i>「請閱讀此專案的 package.json 與主要入口檔案，用 3 點向我解釋它的架構與如何啟動。」</i> AI 會瞬間為你生成導讀！
+          </p>
+        </div>
+
+        <!-- 情境 2: Fork 與 Upstream 同步 -->
+        <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-2xl">🍴</span>
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900">情境 2：Fork 模式與上游同步</h3>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            當你想長期自訂某個開源工具，但又希望原作者修復 Bug 時你能一鍵同步時，請使用 Fork：
+          </p>
+          <div class="relative bg-slate-900 text-slate-100 rounded-xl p-4 code-block text-xs sm:text-sm">
+            <pre><code id="code-fork-sync"># 1. 點擊 GitHub 網頁上的 "Fork" 按鈕，然後 Clone 自己的版本
+git clone https://github.com/你的帳號/fork下來的專案.git
+cd fork下來的專案
+
+# 2. 設定原作者倉庫為「上游 (upstream)」
+git remote add upstream https://github.com/原作者/原專案.git
+
+# 3. 日後原作者有更新時，隨時拉取最新代碼合併！
+git fetch upstream
+git merge upstream/main</code></pre>
+            <button onclick="copyCode('code-fork-sync')" class="absolute top-3 right-3 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1.5">
+              <span>📋 複製內容</span>
+            </button>
+          </div>
+          <p class="text-xs text-slate-500">
+            💡 <strong>優點</strong>：所有你自訂的新代碼都在自己的主幹上，而且永遠不會與原專案最新版本脫節。
+          </p>
+        </div>
+
+      </div>
+
+      <!-- 核心情境 3: 匯入為 AI Skill (技能) -->
+      <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2.5">
+            <span class="p-2.5 bg-emerald-100 text-emerald-800 rounded-xl text-2xl">⚡</span>
+            <div>
+              <h3 class="text-xl sm:text-2xl font-bold text-slate-900">情境 3：核心秘技 —— 將別人的代碼與工作流匯入為 AI 的「Skill (技能)」</h3>
+              <p class="text-xs sm:text-sm text-slate-500">讓你的 AI 助手（如 Antigravity / Cursor / Claude Code）瞬間獲得別人的專家級超能力</p>
+            </div>
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 text-xs sm:text-sm font-bold px-3 py-1 rounded-full">Vibe Coding 必學</span>
+        </div>
+
+        <p class="text-sm sm:text-base text-slate-700 leading-relaxed">
+          在現代 AI 開發環境中，<strong>Skill（技能）</strong> 是一個包含 <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono text-emerald-700">SKILL.md</code>、腳本與提示詞 SOP 的資料夾。
+          當你在 GitHub 上看到別人寫好的高難度工作流（例如：爬蟲爬蟲腳本、PDF 提取、特定資料庫串接），你可以<strong>不必把全部代碼混進專案</strong>，而是直接將其包裝為 Skill：
+        </p>
+
+        <!-- 結構卡片 -->
+        <div class="bg-slate-50 p-4 sm:p-5 rounded-xl border border-slate-200 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+          <div>
+            <h4 class="font-bold text-slate-900 mb-1 flex items-center gap-1.5">
+              <span>📁 存放位置（兩種範圍）：</span>
+            </h4>
+            <ul class="space-y-1.5 text-slate-600">
+              <li>• <strong>本專案專用</strong>：放入 <code class="bg-white px-1.5 py-0.5 rounded font-mono text-blue-600">.agents/skills/&lt;skill-name&gt;/</code></li>
+              <li>• <strong>全域所有專案共用</strong>：放入 <code class="bg-white px-1.5 py-0.5 rounded font-mono text-purple-600">~/.gemini/config/skills/&lt;skill-name&gt;/</code></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-900 mb-1 flex items-center gap-1.5">
+              <span>📝 標準 Skill 結構：</span>
+            </h4>
+            <div class="bg-slate-900 text-slate-200 p-2.5 rounded font-mono text-xs">
+              skills/&lt;skill-name&gt;/<br>
+              ├── SKILL.md  (必須：說明技術規格與執行步驟)<br>
+              └── scripts/   (選填：可直接呼叫執行的輔助腳本)
+            </div>
+          </div>
+        </div>
+
+        <!-- 匯入操作示範 -->
+        <h4 class="font-bold text-slate-900 text-base">實戰：匯入一個 GitHub 開源 Skill 到你的專案</h4>
+        <div class="relative bg-slate-900 text-slate-100 rounded-xl p-4 sm:p-5 code-block text-sm sm:text-base">
+          <pre><code id="code-import-skill"># 1. 建立技能存放目錄 (以 web-scraper 技能為例)
+mkdir -p .agents/skills/web-scraper
+
+# 2. 方法 A：直接複製別人的 SKILL.md 到該目錄
+# (或使用 curl 直接下載 GitHub 上的 raw 檔案)
+curl -o .agents/skills/web-scraper/SKILL.md https://raw.githubusercontent.com/作者/repo/main/SKILL.md
+
+# 3. 方法 B：若整份專案是一個完整技能庫，使用 Sparse Checkout 或 Subtree 匯入
+# 也可以直接叫 AI：「請參考 https://github.com/xxx/yyy 的內容，幫我把它濃縮成 .agents/skills/ 下的一個新 Skill」</code></pre>
+          <button onclick="copyCode('code-import-skill')" class="absolute top-3 right-3 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs sm:text-sm px-3.5 py-1.5 rounded-lg transition flex items-center gap-1.5">
+            <span>📋 複製內容</span>
+          </button>
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-xs sm:text-sm text-emerald-950 flex items-start gap-2.5">
+          <span class="text-emerald-600 font-bold text-lg">💡</span>
+          <div>
+            <strong>如何召喚匯入的 Skill？</strong><br>
+            一旦將技能放入目錄，你在與 AI 對話時只要輸入：<i>「請使用 web-scraper 技能來幫我抓取這個網站的產品列表」</i>，AI 就會自動按照該技能裡定義的嚴謹 SOP 與腳本逐步執行，零失誤！
+          </div>
+        </div>
+      </div>
+
+      <!-- 開源授權避坑手冊 -->
+      <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <span>📜 開源授權（License）避坑 60 秒常識</span>
+        </h3>
+        <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+          借用開源代碼時，最容易被忽略的是授權條款。以下是 95% 開源專案常見的授權，一眼看懂能不能用：
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs sm:text-sm pt-1">
+          <div class="p-4 bg-emerald-50/70 border border-emerald-200 rounded-xl">
+            <div class="font-bold text-emerald-800 text-sm mb-1 flex items-center gap-1">
+              <span>🟢 MIT / BSD</span>
+              <span class="text-[11px] bg-emerald-200 text-emerald-800 px-1.5 py-0.5 rounded">最寬鬆</span>
+            </div>
+            <p class="text-slate-700 leading-relaxed">
+              <strong>完全自由！</strong>可以商業使用、隨意修改，甚至閉源販售，只需保留原作者版權宣告即可。
+            </p>
+          </div>
+
+          <div class="p-4 bg-blue-50/70 border border-blue-200 rounded-xl">
+            <div class="font-bold text-blue-800 text-sm mb-1 flex items-center gap-1">
+              <span>🔵 Apache 2.0</span>
+              <span class="text-[11px] bg-blue-200 text-blue-800 px-1.5 py-0.5 rounded">企業最愛</span>
+            </div>
+            <p class="text-slate-700 leading-relaxed">
+              商業友善，而且多了<strong>專利授權保護</strong>，避免原作者日後反悔告你侵權，非常安全。
+            </p>
+          </div>
+
+          <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-xl">
+            <div class="font-bold text-amber-800 text-sm mb-1 flex items-center gap-1">
+              <span>🟡 GPL / AGPL</span>
+              <span class="text-[11px] bg-amber-200 text-amber-800 px-1.5 py-0.5 rounded">強傳染性</span>
+            </div>
+            <p class="text-slate-700 leading-relaxed">
+              <strong>若你改寫或引用它，你的整個專案也必須開源！</strong>若要做商業閉源產品請盡量避免直接複製代碼。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Try This 實戰練習卡片 5 -->
+      <div class="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-2xl p-6 sm:p-7 shadow-sm">
+        <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <span class="bg-amber-500 text-white text-xs sm:text-sm font-black px-3 py-1 rounded-md uppercase tracking-wider">Try This 實戰演練 #5</span>
+            <h3 class="font-bold text-slate-900 text-lg sm:text-xl">親自演練「開源借力」：建立本地自用新專案</h3>
+          </div>
+          <label class="flex items-center gap-2 cursor-pointer bg-white px-3.5 py-1.5 rounded-full border border-amber-300 text-xs sm:text-sm font-semibold text-slate-700 shadow-sm hover:bg-amber-100/50">
+            <input type="checkbox" onchange="toggleExercise(5, this)" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+            <span>標記為已完成</span>
+          </label>
+        </div>
+        <p class="text-sm sm:text-base text-slate-700 mb-4 leading-relaxed">
+          在終端機練習把一個開源倉庫轉化為自己完全掌握的新專案：
+        </p>
+
+        <div class="relative bg-slate-900 text-slate-100 rounded-xl p-4 sm:p-5 code-block text-sm sm:text-base mb-4">
+          <pre><code id="code-exercise-5"># 1. 練習 Clone 一個小型開源專案
+git clone https://github.com/octocat/Spoon-Knife.git my-forked-practice
+cd my-forked-practice
+
+# 2. 查看原本的遠端位址
+git remote -v
+
+# 3. 檢查開源專案的分支歷史
+git log --oneline -n 3
+
+# 4. 練習完成！若想清理練習目錄可退回上一層刪除
+cd .. && rm -rf my-forked-practice</code></pre>
+          <button onclick="copyCode('code-exercise-5')" class="absolute top-3 right-3 bg-amber-600 hover:bg-amber-500 text-white text-xs sm:text-sm px-3.5 py-1.5 rounded-lg transition font-medium flex items-center gap-1.5 shadow-sm">
+            <span>📋 複製內容</span>
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 7: 推薦影音與資源庫 -->
     <!-- ========================================== -->
     <section id="tab-resources" class="tab-content hidden space-y-8">
       
@@ -922,7 +1223,7 @@ git pull</code></pre>
     </section>
 
     <!-- ========================================== -->
-    <!-- TAB 7: 急救速查卡 -->
+    <!-- TAB 8: 急救速查卡 -->
     <!-- ========================================== -->
     <section id="tab-cheatsheet" class="tab-content hidden space-y-6">
       
@@ -972,7 +1273,7 @@ git pull</code></pre>
                 <td class="p-3.5 font-medium text-rose-900">💥 放棄未存檔修改 (AI 寫爛急救)</td>
                 <td class="p-3.5 font-mono text-rose-700 font-bold text-xs sm:text-sm">git restore .</td>
                 <td class="p-3.5 text-right">
-                  <button onclick="copySnippet('git restore .')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs sm:text-sm px-3 py-1.5 rounded transition">複製</button>
+                  <button onclick="copySnippet('git restore .')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs sm:text-sm px-3.5 py-1.5 rounded transition">複製</button>
                 </td>
               </tr>
 
@@ -988,7 +1289,7 @@ git pull</code></pre>
                 <td class="p-3.5 font-medium">切回主幹並合併實驗分支</td>
                 <td class="p-3.5 font-mono text-emerald-700 text-xs sm:text-sm">git switch main &amp;&amp; git merge feature/ai-test</td>
                 <td class="p-3.5 text-right">
-                  <button onclick="copySnippet('git switch main &amp;&amp; git merge feature/ai-test')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm px-3 py-1.5 rounded transition">複製</button>
+                  <button onclick="copySnippet('git switch main &amp;&amp; git merge feature/ai-test')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm px-3.5 py-1.5 rounded transition">複製</button>
                 </td>
               </tr>
 
@@ -996,7 +1297,23 @@ git pull</code></pre>
                 <td class="p-3.5 font-medium text-rose-900">🗑️ 強制刪除搞砸的實驗分支</td>
                 <td class="p-3.5 font-mono text-rose-700 font-bold text-xs sm:text-sm">git branch -D feature/ai-test</td>
                 <td class="p-3.5 text-right">
-                  <button onclick="copySnippet('git branch -D feature/ai-test')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs sm:text-sm px-3 py-1.5 rounded transition">複製</button>
+                  <button onclick="copySnippet('git branch -D feature/ai-test')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs sm:text-sm px-3.5 py-1.5 rounded transition">複製</button>
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-50 bg-teal-50/40">
+                <td class="p-3.5 font-medium text-teal-900">📥 Clone 別人專案當本地起點</td>
+                <td class="p-3.5 font-mono text-teal-700 text-xs sm:text-sm">git clone &lt;repo_url&gt; &amp;&amp; rm -rf .git &amp;&amp; git init</td>
+                <td class="p-3.5 text-right">
+                  <button onclick="copySnippet('git clone <repo_url> && rm -rf .git && git init')" class="bg-teal-100 hover:bg-teal-200 text-teal-800 text-xs sm:text-sm px-3 py-1.5 rounded transition">複製</button>
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-50 bg-teal-50/40">
+                <td class="p-3.5 font-medium text-teal-900">🍴 同步 Fork 原作者最新進度</td>
+                <td class="p-3.5 font-mono text-teal-700 text-xs sm:text-sm">git fetch upstream &amp;&amp; git merge upstream/main</td>
+                <td class="p-3.5 text-right">
+                  <button onclick="copySnippet('git fetch upstream && git merge upstream/main')" class="bg-teal-100 hover:bg-teal-200 text-teal-800 text-xs sm:text-sm px-3 py-1.5 rounded transition">複製</button>
                 </td>
               </tr>
 
@@ -1083,10 +1400,16 @@ git switch main && git merge feature/ai-test
 # 6. 強制刪除失敗分支
 git branch -D feature/ai-test
 
-# 7. 推送至 GitHub
+# 7. Clone 別人專案當全新起點
+git clone <repo_url> && rm -rf .git && git init
+
+# 8. 同步 Fork 原作者最新代碼
+git fetch upstream && git merge upstream/main
+
+# 9. 推送至 GitHub
 git push
 
-# 8. 拉取最新版本
+# 10. 拉取最新版本
 git pull`;
       copySnippet(allText);
     }
@@ -1113,7 +1436,7 @@ git pull`;
     }
 
     function updateProgress() {
-      const total = 4;
+      const total = 5;
       const done = completedExercises.size;
       const percentage = Math.round((done / total) * 100);
       document.getElementById('progress-text').innerText = `${done} / ${total} 練習完成`;
